@@ -26,4 +26,26 @@ public class Details {
     public String getReason() {
         return reason;
     }
+
+    //----------- testing setters
+
+    public void setPatient_name(String patient_name) {
+        this.patient_name = patient_name;
+    }
+
+    public void setDoc_code(char doc_code) {
+        this.doc_code = doc_code;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
 }

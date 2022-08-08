@@ -5,42 +5,6 @@ public class Patient {
     String name;
     int age;
     String email;
-    char docCode;
-    int waitingTime;
-    int token_number;
-    String checkupTime;
-
-    public int getToken_number() {
-        return token_number;
-    }
-
-    public void setToken_number(int token_number) {
-        this.token_number = token_number;
-    }
-
-    public String getCheckupTime() {
-        return checkupTime;
-    }
-
-    public void setCheckupTime(String checkupTime) {
-        this.checkupTime = checkupTime;
-    }
-
-    public char getDocCode() {
-        return docCode;
-    }
-
-    public void setDocCode(char docCode) {
-        this.docCode = docCode;
-    }
-
-    public int getWaitingTime() {
-        return waitingTime;
-    }
-
-    public void setWaitingTime(int waitingTime) {
-        this.waitingTime = waitingTime;
-    }
 
     public String getId() {
         return id;
