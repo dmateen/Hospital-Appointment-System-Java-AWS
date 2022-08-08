@@ -2,12 +2,12 @@ package com.example.hospital_appointment_system;
 import com.amazonaws.services.sqs.model.Message;
 import com.example.hospital_appointment_system.Appointment.appointment;
 import com.example.hospital_appointment_system.DAO.Appointment_DAO;
+import com.example.hospital_appointment_system.DAO.Login_DAO;
 import com.example.hospital_appointment_system.DAO.Patient_DAO;
 import com.example.hospital_appointment_system.Patient.Patient;
 import com.example.hospital_appointment_system.Queue.sqsQueue;
 import com.example.hospital_appointment_system.Mail.SendMail;
 import com.example.hospital_appointment_system.Receptionist.Receptionist;
-
 import java.util.List;
 
 public class Main {
@@ -16,8 +16,13 @@ public class Main {
 //        Patient patient=new Patient();
 //        Patient_DAO patient_dao=new Patient_DAO();
 
-        sqsQueue SQS =new sqsQueue();
-        SQS.deleteAllMessages("doctorA");
+          Login_DAO login_dao=new Login_DAO();
+          login_dao.hashPasswordMatch("doctorA");
+        login_dao.hashPasswordMatch("doctorA");
+        login_dao.hashPasswordMatch("doctorA");
+
+//        sqsQueue SQS =new sqsQueue();
+//        SQS.deleteAllMessages("doctorA");
 
 //        Details details=new Details();
 //        details.setPatient_name("Daniyal");

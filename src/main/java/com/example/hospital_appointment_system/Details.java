@@ -27,7 +27,7 @@ public class Details {
         return reason;
     }
 
-    //----------- testing setters
+    //----------- testing setters --------
 
     public void setPatient_name(String patient_name) {
         this.patient_name = patient_name;
