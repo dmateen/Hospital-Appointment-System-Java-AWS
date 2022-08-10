@@ -16,10 +16,10 @@ public class Main {
 //        Patient patient=new Patient();
 //        Patient_DAO patient_dao=new Patient_DAO();
 
-          Login_DAO login_dao=new Login_DAO();
-          login_dao.hashPasswordMatch("doctorA");
-        login_dao.hashPasswordMatch("doctorA");
-        login_dao.hashPasswordMatch("doctorA");
+//          Login_DAO login_dao=new Login_DAO();
+//          login_dao.hashPasswordMatch("doctorA");
+//        login_dao.hashPasswordMatch("doctorA");
+//        login_dao.hashPasswordMatch("doctorA");
 
 //        sqsQueue SQS =new sqsQueue();
 //        SQS.deleteAllMessages("doctorA");

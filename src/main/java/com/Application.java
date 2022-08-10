@@ -1,8 +1,12 @@
 package com;
 
-public class Application extends javax.ws.rs.core.Application {
-  public  Application()
-    {
-        System.out.println("Hello Application....");
+import org.glassfish.jersey.server.ResourceConfig;
+
+import javax.ws.rs.ApplicationPath;
+
+@ApplicationPath("/test")
+public class Application extends ResourceConfig {
+    public Application() {
+        this.packages("com.example.resources");
     }
 }
