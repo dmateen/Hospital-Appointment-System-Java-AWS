@@ -61,7 +61,7 @@ public class sqsQueue {
         //Printing the size of Queue
         return messages.size();
     }
-    public void readAllMessage(String queueName) {
+    public List<Message> readAllMessage(String queueName) {
 
         //Creating Receive Message Request
         ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest().withQueueUrl(getQueueUrl(queueName)).withMaxNumberOfMessages(30).withVisibilityTimeout(1);
@@ -77,6 +77,7 @@ public class sqsQueue {
         }
 
         System.out.println(messages.size());
+        return messages;
 
     }
 
@@ -93,7 +94,7 @@ public class sqsQueue {
 
     }
     public void deleteAllMessages(String queueName) {
-        ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest().withQueueUrl(getQueueUrl(queueName)).withMaxNumberOfMessages(1);
+        ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest().withQueueUrl(getQueueUrl(queueName)).withMaxNumberOfMessages(10);
         List<Message> messages = sqs.receiveMessage(receiveMessageRequest).getMessages();
         //Deleting Messages
         if(messages.size()!=0) {

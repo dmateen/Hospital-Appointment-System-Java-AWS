@@ -13,6 +13,7 @@ import java.util.List;
 public class Main {
     public static void main(String []args) throws Exception
     {
+
 //        Patient patient=new Patient();
 //        Patient_DAO patient_dao=new Patient_DAO();
 
@@ -21,8 +22,8 @@ public class Main {
 //        login_dao.hashPasswordMatch("doctorA");
 //        login_dao.hashPasswordMatch("doctorA");
 
-//        sqsQueue SQS =new sqsQueue();
-//        SQS.deleteAllMessages("doctorA");
+        sqsQueue SQS =new sqsQueue();
+        SQS.deleteAllMessages("doctorA");
 
 //        Details details=new Details();
 //        details.setPatient_name("Daniyal");
