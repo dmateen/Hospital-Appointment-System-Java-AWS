@@ -9,5 +9,6 @@
 </h1>
 <br/>
 <a href="doctor_login.html">Doctor Login</a>
+<a href="patient_login.html">Patient Login</a>
 </body>
 </html>

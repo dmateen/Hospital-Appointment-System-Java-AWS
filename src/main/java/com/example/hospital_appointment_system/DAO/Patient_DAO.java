@@ -2,10 +2,7 @@ package com.example.hospital_appointment_system.DAO;
 
 import com.example.hospital_appointment_system.Patient.Patient;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Patient_DAO {
     // -------- Declaring JDBC Vars --------
@@ -61,5 +58,23 @@ public class Patient_DAO {
 
     }
     // -------- Delete Appointment DAO Function --------
+
+    public Patient getPatientInfo(String id) throws SQLException {
+        // -------- Query for Getting Patient Info --------
+        String query = "SELECT * FROM appointments WHERE id='" + id + "'";
+        // -------- Query for Getting Patient Info --------
+
+        // -------- Query for Patient Data --------
+        ResultSet rs= st.executeQuery(query);
+
+        Patient patient=new Patient();
+        patient.setId(rs.getString(1));
+        patient.setName(rs.getString(2));
+        patient.setAge(rs.getInt(3));
+        patient.setEmail(rs.getString(4));
+
+        return patient;
+
+    }
 
 }

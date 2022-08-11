@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 
 import java.io.*;
 import java.util.List;
+import javax.mail.Session;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -22,6 +23,16 @@ public class login extends HttpServlet {
 
         String docCode=request.getParameter("doctorCode");
         String password= request.getParameter("loginPassword");
+
+        //
+        //Code to check if login and password is Correct
+        //
+
+//        HttpSession mySession = request.getSession();
+//        mySession.setAttribute("docCode",docCode);
+//
+//        response.sendRedirect("/testServlet");
+
 
         /**-- Forwarding the request to another page  --**/
         request.setAttribute("docCode", docCode);

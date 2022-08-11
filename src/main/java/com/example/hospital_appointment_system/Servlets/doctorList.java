@@ -21,7 +21,8 @@ public class doctorList extends HttpServlet {
         /**-- End of Getting Data stored in the Request --**/
 
         PrintWriter out=response.getWriter();
-        out.println("<html><body>");
+        out.println("<html>");
+        out.println("<body>");
         sqsQueue SQS=new sqsQueue();
         List<Message> messages=SQS.readAllMessage("doctor"+docCode);
 

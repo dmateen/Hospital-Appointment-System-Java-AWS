@@ -28,16 +28,12 @@ public class buzzer extends HttpServlet {
         if (app != null) {
             try {
                 Appointment_DAO appointment_dao = new Appointment_DAO();
+                appointment_dao.changeAppointmentStatus("COMPLETE",app.getAppointment_id());
 
-                appointment_dao.deleteAppointment(app.getAppointment_id());
-
-                Patient_DAO patient_dao = new Patient_DAO();
-                patient_dao.deletePatient(app.getPatient_id());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
-
 
         SQS.deleteMessage("doctor" + docCode, SQS.getReceiptHandle("doctor" + docCode));
         PrintWriter out = response.getWriter();
@@ -49,7 +45,6 @@ public class buzzer extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/doctorList");
         dispatcher.forward(request, response);
         /**-- // Forwarding the request to another page  --**/
-
 
     }
 
