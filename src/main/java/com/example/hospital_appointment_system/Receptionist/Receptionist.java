@@ -32,15 +32,16 @@ public class Receptionist {
         new_appointment.setAppointment_id(generate_appointmentId());
         new_appointment.setPatient_id(patient.getId());
         new_appointment.setDoc_code(details.getDoc_code());
-        new_appointment.setWaiting_time(generate_waitingTime("doctor"+String.valueOf(details.getDoc_code())));
-        new_appointment.setCheckup_time(generate_checkuptime());
+//        new_appointment.setWaiting_time(generate_waitingTime("doctor"+String.valueOf(details.getDoc_code())));
+//        new_appointment.setCheckup_time(generate_checkuptime());
         new_appointment.setToken_number(generate_token());
         new_appointment.setDate();
 
 
         addPatienttoDB(patient);
         addAppointmentToDB(new_appointment);
-        addPatienttoQueue(patient);
+        //addPatienttoQueue(patient);
+        addAppointmentToQueue(new_appointment);
 
         //Now add patient to queue
     }
@@ -60,11 +61,11 @@ public class Receptionist {
         patient_dao.addPatient(patient);
     }
 
-    public int generate_waitingTime(String queueName)
-    {
-        sqsQueue sqs=new sqsQueue();
-        return avgWaitingtime*sqs.getQueueSize(queueName);
-    }
+//    public int generate_waitingTime(String queueName)
+//    {
+//        sqsQueue sqs=new sqsQueue();
+//        return avgWaitingtime*sqs.getQueueSize(queueName);
+//    }
     String generate_id()
     {
         return "PAT-"+ UUID.randomUUID().toString().substring(0,6);
@@ -75,11 +76,11 @@ public class Receptionist {
         return appointment_dao.returnToken();
     }
 
-    String generate_checkuptime()
-    {
-        //Goto DB to get the checkup time of the last person and then add the average waiting time to it
-        return "Test Checkup Time";
-    }
+//    String generate_checkuptime()
+//    {
+//        //Goto DB to get the checkup time of the last person and then add the average waiting time to it
+//        return "Test Checkup Time";
+//    }
 
     public void addPatienttoQueue(Patient patient)
     {

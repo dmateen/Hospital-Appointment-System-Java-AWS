@@ -68,4 +68,22 @@ public class Appointment_DAO {
 
     // -------- //Add Patient to DB --------
 
+
+
+    // -------- Delete Appointment DAO Function --------
+    public int deleteAppointment(String appointmentID) throws Exception {
+        // -------- Query for Deleting Data --------
+        String query = "DELETE FROM appointments WHERE appointment_id='" + appointmentID + "'";
+        // -------- Query for Deleting Data --------
+
+        // -------- Query for Deleting Data --------
+        int rs = st.executeUpdate(query);
+
+        return rs;
+
+    }
+    // -------- Delete Appointment DAO Function --------
+
+
+
 }

@@ -24,6 +24,7 @@ public class Main {
 
         sqsQueue SQS =new sqsQueue();
         SQS.deleteAllMessages("doctorA");
+//        SQS.readAllMessage("doctorA");
 
 //        Details details=new Details();
 //        details.setPatient_name("Daniyal");

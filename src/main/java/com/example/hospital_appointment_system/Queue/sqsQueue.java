@@ -27,8 +27,28 @@ public class sqsQueue {
         sqs.sendMessage(sendMessageRequest);
 
     }
-
     public String readMessage(String queueName) {
+
+        //Creating Receive Message Request
+        ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest().withQueueUrl(getQueueUrl(queueName)).withMaxNumberOfMessages(1).withVisibilityTimeout(0);
+        //Getting a list of messages
+        List<Message> messages = sqs.receiveMessage(receiveMessageRequest).getMessages();
+        //Printing the size of Queue
+        System.out.println(messages.size());
+
+        if(messages.size()!=0) {
+            //Printing Message
+            return messages.get(0).getBody();
+        }
+        else
+        {
+            System.out.println("Error; Cant read the top most message as the queue is empty");
+        }
+
+        return null;
+
+    }
+    public String getReceiptHandle(String queueName) {
 
         //Creating Receive Message Request
         ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest().withQueueUrl(getQueueUrl(queueName)).withMaxNumberOfMessages(1).withVisibilityTimeout(10);
@@ -38,9 +58,7 @@ public class sqsQueue {
         System.out.println(messages.size());
 
         if(messages.size()!=0) {
-            //Printing Message
-            System.out.println(messages.get(0).getBody());
-            System.out.println(messages.get(0).toString());
+            //Printing Message;
             return messages.get(0).getReceiptHandle();
         }
         else

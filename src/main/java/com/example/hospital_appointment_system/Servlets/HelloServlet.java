@@ -1,4 +1,4 @@
-package com.example.hospital_appointment_system;
+package com.example.hospital_appointment_system.Servlets;
 
 import java.io.*;
 import javax.servlet.http.*;
