@@ -2,10 +2,12 @@ package com.example.hospital_appointment_system.Servlets;
 
 import com.amazonaws.services.sqs.model.Message;
 import com.example.hospital_appointment_system.Appointment.appointment;
+import com.example.hospital_appointment_system.DAO.Doctor_DAO;
 import com.example.hospital_appointment_system.Patient.Patient;
 import com.example.hospital_appointment_system.Queue.sqsQueue;
 import com.google.gson.Gson;
 import java.io.*;
+import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -23,6 +25,23 @@ public class doctorList extends HttpServlet {
         PrintWriter out=response.getWriter();
         out.println("<html>");
         out.println("<body>");
+
+
+        String status;
+        try {
+             status=new Doctor_DAO().getDoctorStatus(docCode);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        if(!status.equals("FREE"))
+            out.println("Doctor Status: BUSY </br>");
+        else
+            out.println("<p>Doctor Status: "+status+"</p>" );
+
         sqsQueue SQS=new sqsQueue();
         List<Message> messages=SQS.readAllMessage("doctor"+docCode);
 

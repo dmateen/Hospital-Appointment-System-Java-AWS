@@ -23,7 +23,10 @@ public class Main {
 //        login_dao.hashPasswordMatch("doctorA");
 
         sqsQueue SQS =new sqsQueue();
-        SQS.deleteAllMessages("doctorA");
+//        SQS.deleteAllMessages("doctorA");
+        System.out.println(SQS.getQueueSize("doctorA"));
+        System.out.println(SQS.getDelayedMessageCount("doctorA"));
+
 //        SQS.readAllMessage("doctorA");
 
 //        Details details=new Details();
