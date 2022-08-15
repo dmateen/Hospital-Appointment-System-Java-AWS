@@ -34,7 +34,7 @@ public class Receptionist {
         new_appointment.setDoc_code(details.getDoc_code());
 //        new_appointment.setWaiting_time(generate_waitingTime("doctor"+String.valueOf(details.getDoc_code())));
 //        new_appointment.setCheckup_time(generate_checkuptime());
-        new_appointment.setToken_number(generate_token());
+        new_appointment.setToken_number(generate_token(String.valueOf(details.getDoc_code())));
         new_appointment.setDate();
 
 
@@ -71,9 +71,9 @@ public class Receptionist {
         return "PAT-"+ UUID.randomUUID().toString().substring(0,6);
     }
 
-    int generate_token() throws Exception {
+    int generate_token(String doc_code) throws Exception {
         Appointment_DAO appointment_dao=new Appointment_DAO();
-        return appointment_dao.returnToken();
+        return appointment_dao.returnToken(doc_code);
     }
 
 //    String generate_checkuptime()

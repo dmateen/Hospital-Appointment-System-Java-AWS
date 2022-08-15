@@ -27,9 +27,9 @@ public class Appointment_DAO {
 
 
     // -------- Return Token Number from DB --------
-    public int returnToken() throws Exception {
-        PreparedStatement presT = con.prepareStatement("SELECT COUNT(appointment_id) FROM appointments WHERE appointment_date = CURDATE() ");
-
+    public int returnToken(String doc_code) throws Exception {
+        PreparedStatement presT = con.prepareStatement("SELECT COUNT(appointment_id) FROM appointments WHERE appointment_date = CURDATE() AND doc_code=? ");
+        presT.setString(1,doc_code);
         ResultSet rs = presT.executeQuery();
         int count = 0;
         while (rs.next())
@@ -42,7 +42,7 @@ public class Appointment_DAO {
 
     public void addAppointment(appointment app) throws Exception {
 
-        PreparedStatement preSt = con.prepareStatement("INSERT INTO appointments values(?,?,?,?,?,?) ");
+        PreparedStatement preSt = con.prepareStatement("INSERT INTO appointments values(?,?,?,?,?) ");
 
         preSt.setString(1, app.getAppointment_id());
         preSt.setString(2, app.getPatient_id());
@@ -51,7 +51,7 @@ public class Appointment_DAO {
 //        preSt.setString(5, app.getCheckup_time());
         preSt.setInt(4, app.getToken_number());
         preSt.setString(5, app.getDate());
-        preSt.setString(6, "PENDING");
+
 
 
         int rs = preSt.executeUpdate();
@@ -81,17 +81,17 @@ public class Appointment_DAO {
     // -------- Delete Appointment DAO Function --------
 
     // -------- Change Appointment DAO Function --------
-    public int changeAppointmentStatus(String status, String app_id) throws Exception {
-        // -------- Query for Updating Data --------
-        String query = "UPDATE appointments SET appointment_status=\'" + status + "\' WHERE appointment_id=\'" + app_id + "\'";
-        // -------- Query for Updating Data --------
-
-        // -------- Query for Updating Data --------
-        int rs = st.executeUpdate(query);
-
-        return rs;
-
-    }
+//    public int changeAppointmentStatus(String status, String app_id) throws Exception {
+//        // -------- Query for Updating Data --------
+//        String query = "UPDATE appointments SET appointment_status=\'" + status + "\' WHERE appointment_id=\'" + app_id + "\'";
+//        // -------- Query for Updating Data --------
+//
+//        // -------- Query for Updating Data --------
+//        int rs = st.executeUpdate(query);
+//
+//        return rs;
+//
+//    }
     // -------- Change Appointment DAO Function --------
 
 
@@ -104,29 +104,29 @@ public class Appointment_DAO {
         // -------- Query for Patient Data --------
         ResultSet rs = st.executeQuery(query);
 
-
+        rs.next();
         return rs.getString(1);
     }
     // -------- Get Doctor Code DAO Function --------
 
 
-    public String getAppointmentStatus(String id) throws SQLException {
-        // -------- Query for Getting Appointment Status --------
-        String query = "SELECT appointment_status FROM appointments WHERE patient_id='" + id + "'";
-        // -------- Query for Getting Appointment Status --------
+//    public String getAppointmentStatus(String id) throws SQLException {
+//        // -------- Query for Getting Appointment Status --------
+//        String query = "SELECT appointment_status FROM appointments WHERE patient_id='" + id + "'";
+//        // -------- Query for Getting Appointment Status --------
+//
+//        // -------- Query for Patient Data --------
+//        ResultSet rs = st.executeQuery(query);
+//
+//
+//        return rs.getString(1);
+//    }
 
-        // -------- Query for Patient Data --------
-        ResultSet rs = st.executeQuery(query);
 
-
-        return rs.getString(1);
-    }
-
-
-    public void changeFromBusy() throws SQLException {
-
-        String query = "Update appointments set appointment_status=\'COMPLETE\' where appointment_status=\'BUSY\'";
-        st.executeUpdate(query);
-
-    }
+//    public void changeFromBusy() throws SQLException {
+//
+//        String query = "Update appointments set appointment_status=\'COMPLETE\' where appointment_status=\'BUSY\'";
+//        st.executeUpdate(query);
+//
+//    }
 }

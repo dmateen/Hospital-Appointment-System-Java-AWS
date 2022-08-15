@@ -33,7 +33,7 @@ public class sqsQueue {
     public String readMessage(String queueName) {
 
         //Creating Receive Message Request
-        ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest().withQueueUrl(getQueueUrl(queueName)).withMaxNumberOfMessages(1).withVisibilityTimeout(20);
+        ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest().withQueueUrl(getQueueUrl(queueName)).withMaxNumberOfMessages(1).withVisibilityTimeout(300);
         //Getting a list of messages
         List<Message> messages = sqs.receiveMessage(receiveMessageRequest).getMessages();
         //Printing the size of Queue
@@ -92,17 +92,17 @@ public class sqsQueue {
     public List<Message> readAllMessage(String queueName) {
 
         //Creating Receive Message Request
-        ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest().withQueueUrl(getQueueUrl(queueName)).withMaxNumberOfMessages(30).withVisibilityTimeout(1);
+        ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest().withQueueUrl(getQueueUrl(queueName)).withMaxNumberOfMessages(getQueueSize(queueName)).withVisibilityTimeout(1);
         //Getting a list of messages
         List<Message> messages = sqs.receiveMessage(receiveMessageRequest).getMessages();
         //Printing the size of Queue
         System.out.println(messages.size());
 
         //Printing Messages
-        for (Message m : messages) {
-            System.out.println(m.getBody());
-            System.out.println(m.toString());
-        }
+//        for (Message m : messages) {
+//            System.out.println(m.getBody());
+//            System.out.println(m.toString());
+//        }
 
         System.out.println(messages.size());
         return messages;

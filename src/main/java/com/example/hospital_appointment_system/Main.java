@@ -22,10 +22,24 @@ public class Main {
 //        login_dao.hashPasswordMatch("doctorA");
 //        login_dao.hashPasswordMatch("doctorA");
 
-        sqsQueue SQS =new sqsQueue();
+//        sqsQueue SQS =new sqsQueue();
+//        System.out.println(SQS.readAllMessage("doctorA"));
 //        SQS.deleteAllMessages("doctorA");
-        System.out.println(SQS.getQueueSize("doctorA"));
-        System.out.println(SQS.getDelayedMessageCount("doctorA"));
+//        SQS.deleteAllMessages("doctorB");
+//        SQS.deleteAllMessages("doctorC");
+
+//        Patient_DAO patient_dao=new Patient_DAO();
+//        System.out.println("Waiting time: "+patient_dao.getWaitingTime("PAT-e68c1b"));
+
+
+//        System.out.println(SQS.getQueueSize("doctorA"));
+//        System.out.println(SQS.getDelayedMessageCount("doctorA"));
+
+//        Login_DAO login_dao=new Login_DAO();
+//
+//
+//        System.out.println(login_dao.hashPasswordMatch("abc1"));
+//        System.out.println(login_dao.hashPasswordMatch("abc2"));
 
 //        SQS.readAllMessage("doctorA");
 

@@ -1,5 +1,7 @@
 package com.example.hospital_appointment_system.Patient;
 
+import com.example.hospital_appointment_system.Queue.sqsQueue;
+
 public class Patient {
     String id;
     String name;
@@ -37,4 +39,6 @@ public class Patient {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
 }

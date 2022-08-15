@@ -20,39 +20,20 @@ public class patientlogin extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        PrintWriter out = response.getWriter();
         String patient_id = request.getParameter("patientID");
+        PrintWriter out = response.getWriter();
 
-        //--
-        //Code to Check if the patient id is valid
-        //--
-
-        out.println("<html><body>");
-        String docCode;
-        Appointment_DAO appointment_dao;
 
         try {
-            appointment_dao = new Appointment_DAO();
-            docCode = appointment_dao.getDocCode(patient_id);
+            Patient_DAO patient_dao = new Patient_DAO();
 
-
-            sqsQueue SQS = new sqsQueue();
-            List<Message> messages = SQS.readAllMessage("doctor" + docCode);
-
-
-            if(appointment_dao.getAppointmentStatus(patient_id).equals("COMPLETE")){
-                Patient_DAO patient_dao=new Patient_DAO();
-                Patient patient=patient_dao.getPatientInfo(patient_id);
-                out.println("Id: "+patient.getId()+"</br>");
-                out.println("Name: "+patient.getName()+"</br>");
-                out.println("Age: "+patient.getAge()+"</br>");
-                out.println("Email: "+patient.getEmail()+"</br>");
-                out.println("Estimated Time Remaining: None </br>");
-                out.println("Appointment Status: Checked </br>");
+            if (!patient_dao.validatePatientId(patient_id)) {
+                out.println("Not a Valid Patient ID");
+            } else {
+                request.setAttribute("PatientID",patient_id);
+                RequestDispatcher requestDispatcher=request.getRequestDispatcher("/ShowPatientDetails");
+                requestDispatcher.forward(request,response);
             }
-            //
-            //Code to check if login and password is Correct
-            //
 
 
             /**-- // Forwarding the request to another page  --**/
@@ -60,6 +41,7 @@ public class patientlogin extends HttpServlet {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
 
     }
 
