@@ -3,6 +3,9 @@ package com.example.hospital_appointment_system.Servlets;
 import com.example.hospital_appointment_system.Appointment.appointment;
 import com.example.hospital_appointment_system.DAO.Appointment_DAO;
 import com.example.hospital_appointment_system.DAO.Doctor_DAO;
+import com.example.hospital_appointment_system.DAO.Patient_DAO;
+import com.example.hospital_appointment_system.Mail.SendMail;
+import com.example.hospital_appointment_system.Patient.Patient;
 import com.example.hospital_appointment_system.Queue.sqsQueue;
 import com.google.gson.Gson;
 
@@ -32,6 +35,10 @@ public class buzzer extends HttpServlet {
             if (status.equals("FREE")) {
                 if (SQS.getQueueSize("doctor" + docCode) != 0) {
                     String readReceipt = SQS.getReceiptHandle("doctor" + docCode);
+                    //Code For sending Email
+                    appointment appointment=new Gson().fromJson(SQS.peekQueue("doctor"+docCode), appointment.class);
+                    SendMail.sendEmail(new Patient_DAO().getPatientInfo(appointment.getPatient_id()).getEmail());
+                    //End of Code for Sending Email
                     SQS.readMessage("doctor" + docCode);
                     doctor_dao.setDoctorStatus(readReceipt, docCode);
                 }
@@ -39,6 +46,10 @@ public class buzzer extends HttpServlet {
                 SQS.deleteMessage("doctor" + docCode, status);
                 if (SQS.getQueueSize("doctor" + docCode) != 0) {
                     String readReceipt = SQS.getReceiptHandle("doctor" + docCode);
+                    //Code For sending Email
+                    appointment appointment=new Gson().fromJson(SQS.peekQueue("doctor"+docCode), appointment.class);
+                    SendMail.sendEmail(new Patient_DAO().getPatientInfo(appointment.getPatient_id()).getEmail());
+                    //End of Code for Sending Email
                     SQS.readMessage("doctor" + docCode);
                     doctor_dao.setDoctorStatus(readReceipt, docCode);
                 } else {

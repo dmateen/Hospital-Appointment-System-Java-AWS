@@ -8,6 +8,13 @@ import com.example.hospital_appointment_system.Patient.Patient;
 import com.example.hospital_appointment_system.Queue.sqsQueue;
 import com.example.hospital_appointment_system.Mail.SendMail;
 import com.example.hospital_appointment_system.Receptionist.Receptionist;
+import com.google.gson.Gson;
+import io.netty.handler.codec.DateFormatter;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.List;
 
 public class Main {
@@ -22,15 +29,22 @@ public class Main {
 //        login_dao.hashPasswordMatch("doctorA");
 //        login_dao.hashPasswordMatch("doctorA");
 
-//        sqsQueue SQS =new sqsQueue();
-//        System.out.println(SQS.readAllMessage("doctorA"));
-//        SQS.deleteAllMessages("doctorA");
-//        SQS.deleteAllMessages("doctorB");
-//        SQS.deleteAllMessages("doctorC");
+        sqsQueue SQS =new sqsQueue();
+        //System.out.println(SQS.readAllMessage("doctorA"));
+        SQS.deleteAllMessages("doctorA");
+        SQS.deleteAllMessages("doctorB");
+        SQS.deleteAllMessages("doctorC");
 
 //        Patient_DAO patient_dao=new Patient_DAO();
 //        System.out.println("Waiting time: "+patient_dao.getWaitingTime("PAT-e68c1b"));
 
+        ;
+//        DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
+//        System.out.println(LocalDateTime.now().plusMinutes(15).format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)));
+
+//        appointment appointment=new Gson().fromJson(new sqsQueue().peekQueue("doctorA"), appointment.class);
+//        SendMail.sendEmail(new Patient_DAO().getPatientInfo(appointment.getPatient_id()).getEmail());
+        //SendMail.sendEmail(patient.getEmail());
 
 //        System.out.println(SQS.getQueueSize("doctorA"));
 //        System.out.println(SQS.getDelayedMessageCount("doctorA"));

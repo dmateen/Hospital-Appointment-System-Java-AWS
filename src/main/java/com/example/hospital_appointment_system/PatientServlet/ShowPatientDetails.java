@@ -8,6 +8,9 @@ import com.example.hospital_appointment_system.Queue.sqsQueue;
 
 import java.io.*;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,15 +31,16 @@ public class ShowPatientDetails extends HttpServlet {
         try {
             Patient_DAO patient_dao = new Patient_DAO();
             Patient patient=patient_dao.getPatientInfo(patient_id);
-
+            int waiting_time=patient_dao.getWaitingTime(patient_id);
             out.println("<html><head><link rel=\"stylesheet\" href=\"css/doctor_login.css\"></head><body>");
             out.println("ID: "+patient.getId()+"<br>");
             out.println("Name: "+patient.getName()+"<br>");
             out.println("Age: "+patient.getAge()+"<br>");
             out.println("Email: "+patient.getEmail()+"<br>");
-            out.println("Estimated Waiting Time:"+patient_dao.getWaitingTime(patient_id)+ "<br>");
+            out.println("Estimated Waiting Time: "+waiting_time+ " mins<br>");
 
-            out.println("Estimated Checkup Time: <br>");
+            if(waiting_time!=0)
+                out.println("Estimated Checkup Time: "+ LocalDateTime.now().plusMinutes(waiting_time).format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))+" <br>");
 
             out.println("<form action=\"index.html\">");
             out.println("<input type=\"submit\" name=\"reloadButton\" id=\"\" value=\"Main Menu\">");

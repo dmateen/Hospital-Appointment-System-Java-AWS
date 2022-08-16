@@ -146,4 +146,24 @@ public class sqsQueue {
         return Integer.parseInt(getQueueAttributesResult.getAttributes().get("ApproximateNumberOfMessagesNotVisible"));
     }
 
+    public String peekQueue(String queueName) {
+
+        //Creating Receive Message Request
+        ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest().withQueueUrl(getQueueUrl(queueName)).withMaxNumberOfMessages(1).withVisibilityTimeout(0);
+        //Getting a list of messages
+        List<Message> messages = sqs.receiveMessage(receiveMessageRequest).getMessages();
+        //Printing the size of Queue
+        System.out.println(messages.size());
+
+        if (messages.size() != 0) {
+            //Printing Message
+            return messages.get(0).getBody();
+        } else {
+            System.out.println("Error; Cant read the top most message as the queue is empty");
+        }
+
+        return null;
+
+    }
+
 }
