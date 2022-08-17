@@ -16,16 +16,13 @@ public class sqsQueue {
     public String getQueueUrl(String queueName) {
         /* Getting Queue Url to send message */
         String queueUrl = String.valueOf(sqs.getQueueUrl(queueName));
-        System.out.println(queueUrl.substring(11, queueUrl.length() - 1));
         queueUrl = queueUrl.substring(11, queueUrl.length() - 1);
-
         return queueUrl;
     }
 
     public void sendMessage(String queueName, String patient) {
         SendMessageRequest sendMessageRequest = new SendMessageRequest();
         sendMessageRequest.withQueueUrl(getQueueUrl(queueName)).withMessageBody(patient);
-
         sqs.sendMessage(sendMessageRequest);
 
     }
@@ -36,15 +33,13 @@ public class sqsQueue {
         ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest().withQueueUrl(getQueueUrl(queueName)).withMaxNumberOfMessages(1).withVisibilityTimeout(300);
         //Getting a list of messages
         List<Message> messages = sqs.receiveMessage(receiveMessageRequest).getMessages();
-        //Printing the size of Queue
-        System.out.println(messages.size());
 
-        if (messages.size() != 0) {
-            //Printing Message
+        System.out.println(messages.size());//Printing the size of Queue
+        if (messages.size() != 0) //Printing Message
             return messages.get(0).getBody();
-        } else {
+            else
             System.out.println("Error; Cant read the top most message as the queue is empty");
-        }
+
 
         return null;
 
@@ -59,31 +54,19 @@ public class sqsQueue {
         List<Message> messages = sqs.receiveMessage(receiveMessageRequest).getMessages();
         //Printing the size of Queue
         System.out.println(messages.size());
-
-        if (messages.size() != 0) {
-            //Printing Message;
+        if (messages.size() != 0)  //Printing Message;
             return messages.get(0).getReceiptHandle();
-        } else {
+
+        else
             System.out.println("Error; Cant read the top most message as the queue is empty");
-        }
 
         return null;
 
     }
 
     public int getQueueSize(String queueName) {
-//        //Creating Receive Message Request
-//        ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest().withQueueUrl(getQueueUrl(queueName)).withMaxNumberOfMessages(30).withVisibilityTimeout(1);
-//        //Thread.sleep(2000);
-//        //Getting a list of messages
-//        List<Message> messages = sqs.receiveMessage(receiveMessageRequest).getMessages();
-//        //Printing the size of Queue
-//        return messages.size();
-
-
         GetQueueAttributesResult attributes = sqs.getQueueAttributes(getQueueUrl(queueName), singletonList("ApproximateNumberOfMessages"));
         String sizeAsStr = attributes.getAttributes().get("ApproximateNumberOfMessages");
-
         return (int) Long.parseLong(sizeAsStr);
 
 
@@ -98,17 +81,11 @@ public class sqsQueue {
         //Printing the size of Queue
         System.out.println(messages.size());
 
-        //Printing Messages
-//        for (Message m : messages) {
-//            System.out.println(m.getBody());
-//            System.out.println(m.toString());
-//        }
 
         System.out.println(messages.size());
         return messages;
 
     }
-
     public void deleteMessage(String queueName, String receiptHandle) {
 
         if (receiptHandle == null)
@@ -119,13 +96,12 @@ public class sqsQueue {
             System.out.println(receiptHandle);
             System.out.println("Message Deleted Successfully!");
         }
-
     }
 
     public void deleteAllMessages(String queueName) {
         ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest().withQueueUrl(getQueueUrl(queueName)).withMaxNumberOfMessages(10);
         List<Message> messages = sqs.receiveMessage(receiveMessageRequest).getMessages();
-        //Deleting Messages
+
         if (messages.size() != 0) {
             for (Message m : messages) {
                 System.out.println("Deleting Message!");
@@ -145,7 +121,6 @@ public class sqsQueue {
 
         return Integer.parseInt(getQueueAttributesResult.getAttributes().get("ApproximateNumberOfMessagesNotVisible"));
     }
-
     public String peekQueue(String queueName) {
 
         //Creating Receive Message Request
@@ -154,7 +129,6 @@ public class sqsQueue {
         List<Message> messages = sqs.receiveMessage(receiveMessageRequest).getMessages();
         //Printing the size of Queue
         System.out.println(messages.size());
-
         if (messages.size() != 0) {
             //Printing Message
             return messages.get(0).getBody();

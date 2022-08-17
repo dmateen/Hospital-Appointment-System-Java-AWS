@@ -11,13 +11,6 @@ import javax.ws.rs.core.Response;
 @Path("/HAS_Resource")
 public class HAS_Resource {
 
-    /** --- Checking Connection ----- **/
-    @GET
-    @Path("/connectionCheck")
-    public String connectionCheck() throws Exception{
-        return "I am Connected";
-    }
-
     @POST
     @Path("/entry")
     public Response entry(String payload) throws Exception{

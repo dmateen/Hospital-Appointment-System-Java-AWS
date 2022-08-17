@@ -82,13 +82,6 @@ public class Receptionist {
 //        return "Test Checkup Time";
 //    }
 
-    public void addPatienttoQueue(Patient patient)
-    {
-        sqsQueue sqs=new sqsQueue();
-        String patientJSON =new Gson().toJson(patient);
-        System.out.println(patientJSON);
-        sqs.sendMessage("doctorA",patientJSON);
-    }
 
     public void addAppointmentToQueue(appointment app)
     {

@@ -130,6 +130,16 @@ public class Patient_DAO {
 
     }
 
+    public int deleteTestData() throws SQLException {
+        String query = "DELETE FROM patient WHERE name=\'TEST DATA\'";
+        // -------- Query for Deleting Data --------
+
+        // -------- Query for Patient Data --------
+        int rs = st.executeUpdate(query);
+
+        return rs;
+    }
+
 
 }
 

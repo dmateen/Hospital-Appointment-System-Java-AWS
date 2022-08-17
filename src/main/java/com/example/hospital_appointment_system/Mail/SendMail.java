@@ -5,7 +5,7 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class SendMail {
-    public static void sendEmail(String recipient) throws MessagingException {
+    public static void sendEmail(String recipient) throws Exception {
         System.out.println("Preparing to send email...");
         Properties properties=new Properties();
         properties.put("mail.smtp.auth","true");
@@ -31,19 +31,16 @@ public class SendMail {
         System.out.println("Message Sent Successfully");
     }
 
-    private static Message prepareMessage(Session session,String myAccountEmail, String recipient) {
+    private static Message prepareMessage(Session session,String myAccountEmail, String recipient) throws Exception {
 
-        try {
+
             Message message=new MimeMessage(session);
             message.setFrom(new InternetAddress(myAccountEmail));
             message.setRecipient(Message.RecipientType.TO,new InternetAddress(recipient));
             message.setSubject("Checkup Turn Reminder-ABC Hospital");
             message.setText("Patient,\n\nThis is to inform you that now it is your turn for the checkup. Kindly head directly towards your doctor so that he can start your checkup accordingly.\n\nRegards,\nXYZ Hospital|123 ABC,Lahore");
             return message;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
 
-        }
 
 
     }

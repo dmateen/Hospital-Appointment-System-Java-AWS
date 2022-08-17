@@ -1,7 +1,5 @@
 package com.example.hospital_appointment_system.Patient;
 
-import com.example.hospital_appointment_system.Queue.sqsQueue;
-
 public class Patient {
     String id;
     String name;

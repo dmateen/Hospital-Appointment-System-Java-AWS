@@ -9,8 +9,6 @@ public class appointment {
     String appointment_id;
     String patient_id;
     char doc_code;
-    int waiting_time;
-    String checkup_time;
 
     int token_number;
     String date;
@@ -22,8 +20,6 @@ public class appointment {
     public void setDate() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
-        System.out.println("Today Date & Time at Now :"+dateFormat.format(date));
-
         this.date=String.valueOf(dateFormat.format(date));
 
     }
@@ -60,19 +56,5 @@ public class appointment {
         this.doc_code = doc_code;
     }
 
-    public int getWaiting_time() {
-        return waiting_time;
-    }
 
-    public void setWaiting_time(int waiting_time) {
-        this.waiting_time = waiting_time;
-    }
-
-    public String getCheckup_time() {
-        return checkup_time;
-    }
-
-    public void setCheckup_time(String checkup_time) {
-        this.checkup_time = checkup_time;
-    }
 }
