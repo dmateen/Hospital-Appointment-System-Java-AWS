@@ -43,8 +43,7 @@ public class Patient_DAO {
 
         if (rs > 0)
             System.out.println("Data Update Successfully");
-        else
-            System.out.println("Insertion Failed");
+
 
     }
 

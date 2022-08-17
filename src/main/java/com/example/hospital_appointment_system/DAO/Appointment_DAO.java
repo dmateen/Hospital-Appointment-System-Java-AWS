@@ -58,8 +58,7 @@ public class Appointment_DAO {
 
         if (rs > 0)
             System.out.println("Data Update Successfully");
-        else
-            System.out.println("Insertion Failed");
+
 
     }
 
@@ -129,5 +128,7 @@ public class Appointment_DAO {
 //        st.executeUpdate(query);
 //
 //    }
+
+
 
 }
