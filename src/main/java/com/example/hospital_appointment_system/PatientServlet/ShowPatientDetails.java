@@ -24,7 +24,7 @@ public class ShowPatientDetails extends HttpServlet {
 
         PrintWriter out = response.getWriter();
         String patient_id = request.getParameter("patientID");
-        System.out.println("Patientid "+patient_id);
+
         String docCode;
         Appointment_DAO appointment_dao;
 

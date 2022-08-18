@@ -19,8 +19,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class ShowPatientDetailsTest {
 
@@ -54,6 +53,7 @@ class ShowPatientDetailsTest {
 
         StringWriter sw = new StringWriter();
 
+
         when(response.getWriter()).thenReturn(new PrintWriter(sw));
         when(mockRequest.getParameter("patientID")).thenReturn("12345");
         //mockRequest.setAttribute("patientID","12345");
@@ -65,6 +65,8 @@ class ShowPatientDetailsTest {
         Thread.sleep(2000);
         new sqsQueue().deleteAllMessages("doctorA");
         new Patient_DAO().deleteTestData();
+
+
 
     }
 

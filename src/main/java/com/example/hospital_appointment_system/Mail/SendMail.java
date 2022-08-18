@@ -28,7 +28,7 @@ public class SendMail {
         Message message=prepareMessage(session,myAccount,recipient);
 
         Transport.send(message);
-        System.out.println("Message Sent Successfully");
+
     }
 
     private static Message prepareMessage(Session session,String myAccountEmail, String recipient) throws Exception {

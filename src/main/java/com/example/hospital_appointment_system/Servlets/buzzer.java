@@ -27,6 +27,7 @@ public class buzzer extends HttpServlet {
             PrintWriter out = response.getWriter();
             String docCode = String.valueOf(request.getParameter("docCode"));
 
+
             Doctor_DAO doctor_dao = new Doctor_DAO();
             String status = doctor_dao.getDoctorStatus(docCode);
 

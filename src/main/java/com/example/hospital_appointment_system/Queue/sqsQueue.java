@@ -53,7 +53,7 @@ public class sqsQueue {
         //Getting a list of messages
         List<Message> messages = sqs.receiveMessage(receiveMessageRequest).getMessages();
         //Printing the size of Queue
-        System.out.println(messages.size());
+
         if (messages.size() != 0)  //Printing Message;
             return messages.get(0).getReceiptHandle();
 

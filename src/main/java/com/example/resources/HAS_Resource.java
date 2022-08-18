@@ -16,7 +16,7 @@ public class HAS_Resource {
     public Response entry(String payload) throws Exception{
 
         /**---- Transferring Data from JSON to Class -----**/
-        System.out.println(payload);
+
         Details details=new Gson().fromJson(payload,Details.class);
 
         /**---- Sending Patient Details to the Receptionist -----**/

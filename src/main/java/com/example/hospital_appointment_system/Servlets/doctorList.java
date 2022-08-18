@@ -31,9 +31,10 @@ public class doctorList extends HttpServlet {
         if(enumeration.hasMoreElements())
             docCode= String.valueOf(request.getAttribute("docCode"));
         else
-        {
             docCode=request.getParameter("docCode");
-        }
+
+
+
 
         /**-- End of Getting Data stored in the Request --**/
 
@@ -73,6 +74,10 @@ public class doctorList extends HttpServlet {
         out.println("<form action=\"doctorList\" method=\"Post\">");
         out.println(" <input type=\"hidden\"  name=\"docCode\" value=\""+docCode+"\">");
         out.println("<input type=\"submit\" name=\"reloadButton\" id=\"\" value=\"Reload\">");
+        out.println("</form>");
+
+        out.println("<form action=\"index.html\">");
+        out.println("<input type=\"submit\" name=\"MainButton\" id=\"\" value=\"Main Menu\">");
         out.println("</form>");
         out.println("</body></html>");
 

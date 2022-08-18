@@ -17,6 +17,7 @@ class HAS_ResourceTest {
     void TestingEntryEndPointWithDocA() throws Exception {
         HAS_Resource has=new HAS_Resource();
 
+        //Creating Details Object
         Details details=new Details();
         details.setReason("TEST DATA");
         details.setDoc_code('A');

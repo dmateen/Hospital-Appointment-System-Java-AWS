@@ -23,7 +23,7 @@ public class Receptionist {
         patient.setAge(details.getAge());
         patient.setEmail(details.getEmail());
 
-        System.out.println(patient.getId()+patient.getName()+patient.getAge()+patient.getEmail()+details.getDoc_code());
+
 
 
         /**Appointment**/
@@ -38,10 +38,12 @@ public class Receptionist {
         new_appointment.setDate();
 
 
+
         addPatienttoDB(patient);
         addAppointmentToDB(new_appointment);
         //addPatienttoQueue(patient);
         addAppointmentToQueue(new_appointment);
+        SendingPatinetID(patient);
 
         //Now add patient to queue
     }
@@ -87,7 +89,7 @@ public class Receptionist {
     {
         sqsQueue sqs=new sqsQueue();
         String appJSON =new Gson().toJson(app);
-        System.out.println(appJSON);
+
         if(app.getDoc_code()=='A')
             sqs.sendMessage("doctorA",appJSON);
         else if(app.getDoc_code()=='B')
@@ -96,5 +98,11 @@ public class Receptionist {
             sqs.sendMessage("doctorC",appJSON);
     }
 
+    void SendingPatinetID(Patient patient)
+    {
+        System.out.println("--------------------------------------------------------");
+        System.out.println("-------------  PATIENT ID: "+patient.getId()+"-------------------");
+        System.out.println("--------------------------------------------------------");
+    }
 
 }

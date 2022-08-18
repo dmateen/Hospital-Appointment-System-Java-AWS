@@ -56,8 +56,7 @@ public class Appointment_DAO {
 
         int rs = preSt.executeUpdate();
 
-        if (rs > 0)
-            System.out.println("Data Update Successfully");
+
 
 
     }

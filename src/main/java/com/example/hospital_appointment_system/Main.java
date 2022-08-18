@@ -20,9 +20,9 @@
 //public class Main {
 //    public static void main(String []args) throws Exception
 //    {
-//        System.out.println(new Login_DAO().hashPasswordMatch("abc"));
-//        System.out.println(new Login_DAO().hashPasswordMatch("abc1"));
-//        System.out.println(new Login_DAO().hashPasswordMatch("abc2"));
+////        System.out.println(new Login_DAO().hashPasswordMatch("abc"));
+////        System.out.println(new Login_DAO().hashPasswordMatch("abc1"));
+////        System.out.println(new Login_DAO().hashPasswordMatch("abc2"));
 //
 ////        Patient patient=new Patient();
 ////        Patient_DAO patient_dao=new Patient_DAO();
@@ -32,11 +32,11 @@
 ////        login_dao.hashPasswordMatch("doctorA");
 ////        login_dao.hashPasswordMatch("doctorA");
 //
-////        sqsQueue SQS =new sqsQueue();
-////        //System.out.println(SQS.readAllMessage("doctorA"));
-////        SQS.deleteAllMessages("doctorA");
-////        SQS.deleteAllMessages("doctorB");
-////        SQS.deleteAllMessages("doctorC");
+//        sqsQueue SQS =new sqsQueue();
+//        //System.out.println(SQS.readAllMessage("doctorA"));
+//        SQS.deleteAllMessages("doctorA");
+//        SQS.deleteAllMessages("doctorB");
+//        SQS.deleteAllMessages("doctorC");
 ////
 //////        Patient_DAO patient_dao=new Patient_DAO();
 //////        System.out.println("Waiting time: "+patient_dao.getWaitingTime("PAT-e68c1b"));
