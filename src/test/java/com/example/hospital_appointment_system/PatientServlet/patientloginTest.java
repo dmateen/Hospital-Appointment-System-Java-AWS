@@ -65,7 +65,7 @@ class patientloginTest {
         patientlogin.doPost(request,response);
 
 //        Thread.sleep(2000);
-//        new sqsQueue().deleteAllMessages("doctorA");
+        new sqsQueue().deleteAllMessages("doctorA");
         new Patient_DAO().deleteTestData();
 
     }

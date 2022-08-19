@@ -26,7 +26,7 @@ public class doctorList extends HttpServlet {
         /**-- Getting Data stored in the Request --**/
         Enumeration<String> enumeration=request.getAttributeNames();
 
-
+    
         String docCode = null;
         if(enumeration.hasMoreElements())
             docCode= String.valueOf(request.getAttribute("docCode"));
