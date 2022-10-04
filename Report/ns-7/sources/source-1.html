@@ -1,0 +1,169 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ShowPatientDetails</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.hospital_appointment_system.PatientServlet</a>
+</div>
+
+<h1>Coverage Summary for Class: ShowPatientDetails (com.example.hospital_appointment_system.PatientServlet)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ShowPatientDetails</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    90.5%
+  </span>
+  <span class="absValue">
+    (19/21)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.example.hospital_appointment_system.PatientServlet;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import com.amazonaws.services.sqs.model.Message;
+<i class="no-highlight">4</i>&nbsp;import com.example.hospital_appointment_system.DAO.Appointment_DAO;
+<i class="no-highlight">5</i>&nbsp;import com.example.hospital_appointment_system.DAO.Patient_DAO;
+<i class="no-highlight">6</i>&nbsp;import com.example.hospital_appointment_system.Patient.Patient;
+<i class="no-highlight">7</i>&nbsp;import com.example.hospital_appointment_system.Queue.sqsQueue;
+<i class="no-highlight">8</i>&nbsp;
+<i class="no-highlight">9</i>&nbsp;import java.io.*;
+<i class="no-highlight">10</i>&nbsp;import java.sql.SQLException;
+<i class="no-highlight">11</i>&nbsp;import java.time.LocalDateTime;
+<i class="no-highlight">12</i>&nbsp;import java.time.format.DateTimeFormatter;
+<i class="no-highlight">13</i>&nbsp;import java.time.format.FormatStyle;
+<i class="no-highlight">14</i>&nbsp;import java.util.List;
+<i class="no-highlight">15</i>&nbsp;import javax.servlet.RequestDispatcher;
+<i class="no-highlight">16</i>&nbsp;import javax.servlet.ServletException;
+<i class="no-highlight">17</i>&nbsp;import javax.servlet.http.*;
+<i class="no-highlight">18</i>&nbsp;import javax.servlet.annotation.*;
+<i class="no-highlight">19</i>&nbsp;
+<i class="no-highlight">20</i>&nbsp;@WebServlet(name = &quot;ShowPatientDetails&quot;, value = &quot;/ShowPatientDetails&quot;)
+<b class="fc"><i class="no-highlight">21</i>&nbsp;public class ShowPatientDetails extends HttpServlet {</b>
+<i class="no-highlight">22</i>&nbsp;
+<i class="no-highlight">23</i>&nbsp;    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+<i class="no-highlight">24</i>&nbsp;
+<b class="fc"><i class="no-highlight">25</i>&nbsp;        PrintWriter out = response.getWriter();</b>
+<b class="fc"><i class="no-highlight">26</i>&nbsp;        String patient_id = request.getParameter(&quot;patientID&quot;);</b>
+<i class="no-highlight">27</i>&nbsp;
+<i class="no-highlight">28</i>&nbsp;        String docCode;
+<i class="no-highlight">29</i>&nbsp;        Appointment_DAO appointment_dao;
+<i class="no-highlight">30</i>&nbsp;
+<i class="no-highlight">31</i>&nbsp;        try {
+<b class="fc"><i class="no-highlight">32</i>&nbsp;            Patient_DAO patient_dao = new Patient_DAO();</b>
+<b class="fc"><i class="no-highlight">33</i>&nbsp;            Patient patient=patient_dao.getPatientInfo(patient_id);</b>
+<b class="fc"><i class="no-highlight">34</i>&nbsp;            int waiting_time=patient_dao.getWaitingTime(patient_id);</b>
+<b class="fc"><i class="no-highlight">35</i>&nbsp;            out.println(&quot;&lt;html&gt;&lt;head&gt;&lt;link rel=\&quot;stylesheet\&quot; href=\&quot;css/doctor_login.css\&quot;&gt;&lt;/head&gt;&lt;body&gt;&quot;);</b>
+<b class="fc"><i class="no-highlight">36</i>&nbsp;            out.println(&quot;ID: &quot;+patient.getId()+&quot;&lt;br&gt;&quot;);</b>
+<b class="fc"><i class="no-highlight">37</i>&nbsp;            out.println(&quot;Name: &quot;+patient.getName()+&quot;&lt;br&gt;&quot;);</b>
+<b class="fc"><i class="no-highlight">38</i>&nbsp;            out.println(&quot;Age: &quot;+patient.getAge()+&quot;&lt;br&gt;&quot;);</b>
+<b class="fc"><i class="no-highlight">39</i>&nbsp;            out.println(&quot;Email: &quot;+patient.getEmail()+&quot;&lt;br&gt;&quot;);</b>
+<b class="fc"><i class="no-highlight">40</i>&nbsp;            out.println(&quot;Estimated Waiting Time: &quot;+waiting_time+ &quot; mins&lt;br&gt;&quot;);</b>
+<i class="no-highlight">41</i>&nbsp;
+<b class="fc"><i class="no-highlight">42</i>&nbsp;            if(waiting_time!=0)</b>
+<b class="fc"><i class="no-highlight">43</i>&nbsp;                out.println(&quot;Estimated Checkup Time: &quot;+ LocalDateTime.now().plusMinutes(waiting_time).format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))+&quot; &lt;br&gt;&quot;);</b>
+<i class="no-highlight">44</i>&nbsp;
+<b class="fc"><i class="no-highlight">45</i>&nbsp;            out.println(&quot;&lt;form action=\&quot;index.html\&quot;&gt;&quot;);</b>
+<b class="fc"><i class="no-highlight">46</i>&nbsp;            out.println(&quot;&lt;input type=\&quot;submit\&quot; name=\&quot;reloadButton\&quot; id=\&quot;\&quot; value=\&quot;Main Menu\&quot;&gt;&quot;);</b>
+<b class="fc"><i class="no-highlight">47</i>&nbsp;            out.println(&quot;&lt;/form&gt;&quot;);</b>
+<i class="no-highlight">48</i>&nbsp;
+<b class="fc"><i class="no-highlight">49</i>&nbsp;            out.println(&quot;&lt;/body&gt;&lt;/html&gt;&quot;);</b>
+<i class="no-highlight">50</i>&nbsp;
+<i class="no-highlight">51</i>&nbsp;
+<i class="no-highlight">52</i>&nbsp;            /**-- // Forwarding the request to another page  --**/
+<i class="no-highlight">53</i>&nbsp;
+<b class="nc"><i class="no-highlight">54</i>&nbsp;        } catch (Exception e) {</b>
+<b class="nc"><i class="no-highlight">55</i>&nbsp;            throw new RuntimeException(e);</b>
+<b class="fc"><i class="no-highlight">56</i>&nbsp;        }</b>
+<i class="no-highlight">57</i>&nbsp;
+<i class="no-highlight">58</i>&nbsp;
+<i class="no-highlight">59</i>&nbsp;    }
+<i class="no-highlight">60</i>&nbsp;
+<i class="no-highlight">61</i>&nbsp;
+<i class="no-highlight">62</i>&nbsp;
+<i class="no-highlight">63</i>&nbsp;
+<i class="no-highlight">64</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-08-19 01:03</div>
+</div>
+</body>
+</html>

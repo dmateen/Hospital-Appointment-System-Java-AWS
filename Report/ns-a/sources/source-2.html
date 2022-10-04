@@ -1,0 +1,197 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > doctorList</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.hospital_appointment_system.Servlets</a>
+</div>
+
+<h1>Coverage Summary for Class: doctorList (com.example.hospital_appointment_system.Servlets)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">doctorList</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    84.2%
+  </span>
+  <span class="absValue">
+    (32/38)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.example.hospital_appointment_system.Servlets;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import com.amazonaws.services.sqs.model.Message;
+<i class="no-highlight">4</i>&nbsp;import com.example.hospital_appointment_system.Appointment.appointment;
+<i class="no-highlight">5</i>&nbsp;import com.example.hospital_appointment_system.DAO.Doctor_DAO;
+<i class="no-highlight">6</i>&nbsp;import com.example.hospital_appointment_system.Patient.Patient;
+<i class="no-highlight">7</i>&nbsp;import com.example.hospital_appointment_system.Queue.sqsQueue;
+<i class="no-highlight">8</i>&nbsp;import com.google.gson.Gson;
+<i class="no-highlight">9</i>&nbsp;import java.io.*;
+<i class="no-highlight">10</i>&nbsp;import java.sql.SQLException;
+<i class="no-highlight">11</i>&nbsp;import java.util.Enumeration;
+<i class="no-highlight">12</i>&nbsp;import java.util.List;
+<i class="no-highlight">13</i>&nbsp;import javax.servlet.http.*;
+<i class="no-highlight">14</i>&nbsp;import javax.servlet.annotation.*;
+<i class="no-highlight">15</i>&nbsp;
+<i class="no-highlight">16</i>&nbsp;@WebServlet(name = &quot;doctorList&quot;, value = &quot;/doctorList&quot;)
+<b class="fc"><i class="no-highlight">17</i>&nbsp;public class doctorList extends HttpServlet {</b>
+<i class="no-highlight">18</i>&nbsp;    private String message;
+<i class="no-highlight">19</i>&nbsp;
+<i class="no-highlight">20</i>&nbsp;    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+<i class="no-highlight">21</i>&nbsp;
+<b class="fc"><i class="no-highlight">22</i>&nbsp;        PrintWriter out=response.getWriter();</b>
+<b class="fc"><i class="no-highlight">23</i>&nbsp;        out.println(&quot;&lt;html&gt;&lt;head&gt;&lt;link rel=\&quot;stylesheet\&quot; href=\&quot;css/doctor_login.css\&quot;&gt;&lt;/head&gt;&quot;);</b>
+<b class="fc"><i class="no-highlight">24</i>&nbsp;        out.println(&quot;&lt;body&gt;&quot;);</b>
+<i class="no-highlight">25</i>&nbsp;
+<i class="no-highlight">26</i>&nbsp;        /**-- Getting Data stored in the Request --**/
+<b class="fc"><i class="no-highlight">27</i>&nbsp;        Enumeration&lt;String&gt; enumeration=request.getAttributeNames();</b>
+<i class="no-highlight">28</i>&nbsp;
+<i class="no-highlight">29</i>&nbsp;
+<b class="fc"><i class="no-highlight">30</i>&nbsp;        String docCode = null;</b>
+<b class="fc"><i class="no-highlight">31</i>&nbsp;        if(enumeration.hasMoreElements())</b>
+<b class="nc"><i class="no-highlight">32</i>&nbsp;            docCode= String.valueOf(request.getAttribute(&quot;docCode&quot;));</b>
+<i class="no-highlight">33</i>&nbsp;        else
+<b class="fc"><i class="no-highlight">34</i>&nbsp;            docCode=request.getParameter(&quot;docCode&quot;);</b>
+<i class="no-highlight">35</i>&nbsp;
+<i class="no-highlight">36</i>&nbsp;
+<i class="no-highlight">37</i>&nbsp;
+<i class="no-highlight">38</i>&nbsp;
+<i class="no-highlight">39</i>&nbsp;        /**-- End of Getting Data stored in the Request --**/
+<i class="no-highlight">40</i>&nbsp;
+<i class="no-highlight">41</i>&nbsp;        String status;
+<i class="no-highlight">42</i>&nbsp;        try {
+<b class="fc"><i class="no-highlight">43</i>&nbsp;             status=new Doctor_DAO().getDoctorStatus(docCode);</b>
+<i class="no-highlight">44</i>&nbsp;
+<b class="nc"><i class="no-highlight">45</i>&nbsp;        } catch (SQLException e) {</b>
+<b class="nc"><i class="no-highlight">46</i>&nbsp;            throw new RuntimeException(e);</b>
+<b class="nc"><i class="no-highlight">47</i>&nbsp;        } catch (Exception e) {</b>
+<b class="nc"><i class="no-highlight">48</i>&nbsp;            throw new RuntimeException(e);</b>
+<b class="fc"><i class="no-highlight">49</i>&nbsp;        }</b>
+<i class="no-highlight">50</i>&nbsp;
+<b class="fc"><i class="no-highlight">51</i>&nbsp;        if(!status.equals(&quot;FREE&quot;))</b>
+<b class="nc"><i class="no-highlight">52</i>&nbsp;            out.println(&quot;Doctor Status: BUSY &lt;/br&gt;&quot;);</b>
+<i class="no-highlight">53</i>&nbsp;        else
+<b class="fc"><i class="no-highlight">54</i>&nbsp;            out.println(&quot;&lt;p&gt;Doctor Status: &quot;+status+&quot;&lt;/p&gt;&quot; );</b>
+<i class="no-highlight">55</i>&nbsp;
+<b class="fc"><i class="no-highlight">56</i>&nbsp;        sqsQueue SQS=new sqsQueue();</b>
+<b class="fc"><i class="no-highlight">57</i>&nbsp;        List&lt;Message&gt; messages=SQS.readAllMessage(&quot;doctor&quot;+docCode);</b>
+<i class="no-highlight">58</i>&nbsp;
+<b class="fc"><i class="no-highlight">59</i>&nbsp;        for (Message m : messages) {</b>
+<b class="fc"><i class="no-highlight">60</i>&nbsp;            appointment app=new appointment();</b>
+<b class="fc"><i class="no-highlight">61</i>&nbsp;            app=new Gson().fromJson(m.getBody(),appointment.class);</b>
+<b class="fc"><i class="no-highlight">62</i>&nbsp;            out.println(app.getPatient_id());</b>
+<b class="fc"><i class="no-highlight">63</i>&nbsp;            out.println(&quot;&lt;br&gt;&quot;);</b>
+<b class="fc"><i class="no-highlight">64</i>&nbsp;        }</b>
+<i class="no-highlight">65</i>&nbsp;
+<i class="no-highlight">66</i>&nbsp;        /*-- Buzzer ---*/
+<i class="no-highlight">67</i>&nbsp;
+<b class="fc"><i class="no-highlight">68</i>&nbsp;        out.println(&quot;&lt;form action=\&quot;buzzer\&quot; name=\&quot;buzzer\&quot; method=\&quot;Post\&quot;&gt;&quot;);</b>
+<b class="fc"><i class="no-highlight">69</i>&nbsp;        out.println(&quot; &lt;input type=\&quot;hidden\&quot;  name=\&quot;docCode\&quot; value=\&quot;&quot;+docCode+&quot;\&quot;&gt;&quot;);</b>
+<b class="fc"><i class="no-highlight">70</i>&nbsp;        out.println(&quot;&lt;input type=\&quot;submit\&quot; name=\&quot;buzzerButton\&quot; id=\&quot;\&quot; value=\&quot;Next Patient\&quot;&gt;&quot;);</b>
+<b class="fc"><i class="no-highlight">71</i>&nbsp;        out.println(&quot;&lt;/form&gt;&quot;);</b>
+<i class="no-highlight">72</i>&nbsp;
+<i class="no-highlight">73</i>&nbsp;
+<b class="fc"><i class="no-highlight">74</i>&nbsp;        out.println(&quot;&lt;form action=\&quot;doctorList\&quot; method=\&quot;Post\&quot;&gt;&quot;);</b>
+<b class="fc"><i class="no-highlight">75</i>&nbsp;        out.println(&quot; &lt;input type=\&quot;hidden\&quot;  name=\&quot;docCode\&quot; value=\&quot;&quot;+docCode+&quot;\&quot;&gt;&quot;);</b>
+<b class="fc"><i class="no-highlight">76</i>&nbsp;        out.println(&quot;&lt;input type=\&quot;submit\&quot; name=\&quot;reloadButton\&quot; id=\&quot;\&quot; value=\&quot;Reload\&quot;&gt;&quot;);</b>
+<b class="fc"><i class="no-highlight">77</i>&nbsp;        out.println(&quot;&lt;/form&gt;&quot;);</b>
+<i class="no-highlight">78</i>&nbsp;
+<b class="fc"><i class="no-highlight">79</i>&nbsp;        out.println(&quot;&lt;form action=\&quot;index.html\&quot;&gt;&quot;);</b>
+<b class="fc"><i class="no-highlight">80</i>&nbsp;        out.println(&quot;&lt;input type=\&quot;submit\&quot; name=\&quot;MainButton\&quot; id=\&quot;\&quot; value=\&quot;Main Menu\&quot;&gt;&quot;);</b>
+<b class="fc"><i class="no-highlight">81</i>&nbsp;        out.println(&quot;&lt;/form&gt;&quot;);</b>
+<b class="fc"><i class="no-highlight">82</i>&nbsp;        out.println(&quot;&lt;/body&gt;&lt;/html&gt;&quot;);</b>
+<i class="no-highlight">83</i>&nbsp;
+<i class="no-highlight">84</i>&nbsp;
+<i class="no-highlight">85</i>&nbsp;//        response.sendRedirect(&quot;/login&quot;);
+<i class="no-highlight">86</i>&nbsp;
+<i class="no-highlight">87</i>&nbsp;
+<i class="no-highlight">88</i>&nbsp;    }
+<i class="no-highlight">89</i>&nbsp;
+<i class="no-highlight">90</i>&nbsp;
+<i class="no-highlight">91</i>&nbsp;
+<i class="no-highlight">92</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-08-19 01:03</div>
+</div>
+</body>
+</html>

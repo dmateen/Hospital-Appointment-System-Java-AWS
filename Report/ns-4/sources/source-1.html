@@ -1,0 +1,238 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Appointment_DAO</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.hospital_appointment_system.DAO</a>
+</div>
+
+<h1>Coverage Summary for Class: Appointment_DAO (com.example.hospital_appointment_system.DAO)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Appointment_DAO</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (26/26)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.example.hospital_appointment_system.DAO;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import com.example.hospital_appointment_system.Appointment.appointment;
+<i class="no-highlight">4</i>&nbsp;import com.example.hospital_appointment_system.Patient.Patient;
+<i class="no-highlight">5</i>&nbsp;
+<i class="no-highlight">6</i>&nbsp;import java.sql.*;
+<i class="no-highlight">7</i>&nbsp;
+<i class="no-highlight">8</i>&nbsp;public class Appointment_DAO {
+<i class="no-highlight">9</i>&nbsp;    // -------- Declaring JDBC Vars --------
+<i class="no-highlight">10</i>&nbsp;    String url;
+<i class="no-highlight">11</i>&nbsp;    Connection con;
+<i class="no-highlight">12</i>&nbsp;    Statement st;
+<i class="no-highlight">13</i>&nbsp;    // -------- //Declaring JDBC Vars --------
+<i class="no-highlight">14</i>&nbsp;
+<i class="no-highlight">15</i>&nbsp;    // -------- Default Constructor --------
+<b class="fc"><i class="no-highlight">16</i>&nbsp;    public Appointment_DAO() throws Exception {</b>
+<i class="no-highlight">17</i>&nbsp;
+<i class="no-highlight">18</i>&nbsp;        // -------- JDBC Connection --------
+<b class="fc"><i class="no-highlight">19</i>&nbsp;        Class.forName(&quot;com.mysql.jdbc.Driver&quot;);</b>
+<b class="fc"><i class="no-highlight">20</i>&nbsp;        url = &quot;jdbc:mysql://127.0.0.1/hospital&quot;;</b>
+<b class="fc"><i class="no-highlight">21</i>&nbsp;        con = DriverManager.getConnection(url, &quot;root&quot;, &quot;root&quot;);</b>
+<b class="fc"><i class="no-highlight">22</i>&nbsp;        st = con.createStatement();</b>
+<i class="no-highlight">23</i>&nbsp;        // -------- //JDBC Connection --------
+<i class="no-highlight">24</i>&nbsp;
+<i class="no-highlight">25</i>&nbsp;    }
+<i class="no-highlight">26</i>&nbsp;    // -------- //Default Constructor --------
+<i class="no-highlight">27</i>&nbsp;
+<i class="no-highlight">28</i>&nbsp;
+<i class="no-highlight">29</i>&nbsp;    // -------- Return Token Number from DB --------
+<i class="no-highlight">30</i>&nbsp;    public int returnToken(String doc_code) throws Exception {
+<b class="fc"><i class="no-highlight">31</i>&nbsp;        PreparedStatement presT = con.prepareStatement(&quot;SELECT COUNT(appointment_id) FROM appointments WHERE appointment_date = CURDATE() AND doc_code=? &quot;);</b>
+<b class="fc"><i class="no-highlight">32</i>&nbsp;        presT.setString(1,doc_code);</b>
+<b class="fc"><i class="no-highlight">33</i>&nbsp;        ResultSet rs = presT.executeQuery();</b>
+<b class="fc"><i class="no-highlight">34</i>&nbsp;        int count = 0;</b>
+<b class="fc"><i class="no-highlight">35</i>&nbsp;        while (rs.next())</b>
+<b class="fc"><i class="no-highlight">36</i>&nbsp;            count = rs.getInt(1);</b>
+<b class="fc"><i class="no-highlight">37</i>&nbsp;        return count;</b>
+<i class="no-highlight">38</i>&nbsp;    }
+<i class="no-highlight">39</i>&nbsp;    // -------- Return token Number from DB --------
+<i class="no-highlight">40</i>&nbsp;
+<i class="no-highlight">41</i>&nbsp;    // -------- Add Appointment to DB --------
+<i class="no-highlight">42</i>&nbsp;
+<i class="no-highlight">43</i>&nbsp;    public void addAppointment(appointment app) throws Exception {
+<i class="no-highlight">44</i>&nbsp;
+<b class="fc"><i class="no-highlight">45</i>&nbsp;        PreparedStatement preSt = con.prepareStatement(&quot;INSERT INTO appointments values(?,?,?,?,?) &quot;);</b>
+<i class="no-highlight">46</i>&nbsp;
+<b class="fc"><i class="no-highlight">47</i>&nbsp;        preSt.setString(1, app.getAppointment_id());</b>
+<b class="fc"><i class="no-highlight">48</i>&nbsp;        preSt.setString(2, app.getPatient_id());</b>
+<b class="fc"><i class="no-highlight">49</i>&nbsp;        preSt.setString(3, String.valueOf(app.getDoc_code()));</b>
+<i class="no-highlight">50</i>&nbsp;//        preSt.setInt(4,app.getWaiting_time());
+<i class="no-highlight">51</i>&nbsp;//        preSt.setString(5, app.getCheckup_time());
+<b class="fc"><i class="no-highlight">52</i>&nbsp;        preSt.setInt(4, app.getToken_number());</b>
+<b class="fc"><i class="no-highlight">53</i>&nbsp;        preSt.setString(5, app.getDate());</b>
+<i class="no-highlight">54</i>&nbsp;
+<i class="no-highlight">55</i>&nbsp;
+<i class="no-highlight">56</i>&nbsp;
+<b class="fc"><i class="no-highlight">57</i>&nbsp;        int rs = preSt.executeUpdate();</b>
+<i class="no-highlight">58</i>&nbsp;
+<i class="no-highlight">59</i>&nbsp;
+<i class="no-highlight">60</i>&nbsp;
+<i class="no-highlight">61</i>&nbsp;
+<i class="no-highlight">62</i>&nbsp;    }
+<i class="no-highlight">63</i>&nbsp;
+<i class="no-highlight">64</i>&nbsp;    // -------- //Add Patient to DB --------
+<i class="no-highlight">65</i>&nbsp;
+<i class="no-highlight">66</i>&nbsp;
+<i class="no-highlight">67</i>&nbsp;    // -------- Delete Appointment DAO Function --------
+<i class="no-highlight">68</i>&nbsp;    public int deleteAppointment(String appointmentID) throws Exception {
+<i class="no-highlight">69</i>&nbsp;        // -------- Query for Deleting Data --------
+<b class="fc"><i class="no-highlight">70</i>&nbsp;        String query = &quot;DELETE FROM appointments WHERE appointment_id=&#39;&quot; + appointmentID + &quot;&#39;&quot;;</b>
+<i class="no-highlight">71</i>&nbsp;        // -------- Query for Deleting Data --------
+<i class="no-highlight">72</i>&nbsp;
+<i class="no-highlight">73</i>&nbsp;        // -------- Query for Deleting Data --------
+<b class="fc"><i class="no-highlight">74</i>&nbsp;        int rs = st.executeUpdate(query);</b>
+<i class="no-highlight">75</i>&nbsp;
+<b class="fc"><i class="no-highlight">76</i>&nbsp;        return rs;</b>
+<i class="no-highlight">77</i>&nbsp;
+<i class="no-highlight">78</i>&nbsp;    }
+<i class="no-highlight">79</i>&nbsp;    // -------- Delete Appointment DAO Function --------
+<i class="no-highlight">80</i>&nbsp;
+<i class="no-highlight">81</i>&nbsp;    // -------- Change Appointment DAO Function --------
+<i class="no-highlight">82</i>&nbsp;//    public int changeAppointmentStatus(String status, String app_id) throws Exception {
+<i class="no-highlight">83</i>&nbsp;//        // -------- Query for Updating Data --------
+<i class="no-highlight">84</i>&nbsp;//        String query = &quot;UPDATE appointments SET appointment_status=\&#39;&quot; + status + &quot;\&#39; WHERE appointment_id=\&#39;&quot; + app_id + &quot;\&#39;&quot;;
+<i class="no-highlight">85</i>&nbsp;//        // -------- Query for Updating Data --------
+<i class="no-highlight">86</i>&nbsp;//
+<i class="no-highlight">87</i>&nbsp;//        // -------- Query for Updating Data --------
+<i class="no-highlight">88</i>&nbsp;//        int rs = st.executeUpdate(query);
+<i class="no-highlight">89</i>&nbsp;//
+<i class="no-highlight">90</i>&nbsp;//        return rs;
+<i class="no-highlight">91</i>&nbsp;//
+<i class="no-highlight">92</i>&nbsp;//    }
+<i class="no-highlight">93</i>&nbsp;    // -------- Change Appointment DAO Function --------
+<i class="no-highlight">94</i>&nbsp;
+<i class="no-highlight">95</i>&nbsp;
+<i class="no-highlight">96</i>&nbsp;    // -------- Get Doctor Code DAO Function --------
+<i class="no-highlight">97</i>&nbsp;    public String getDocCode(String id) throws Exception {
+<i class="no-highlight">98</i>&nbsp;        // -------- Query for Getting Doc Code --------
+<b class="fc"><i class="no-highlight">99</i>&nbsp;        String query = &quot;SELECT doc_code FROM appointments WHERE patient_id=&#39;&quot; + id + &quot;&#39;&quot;;</b>
+<i class="no-highlight">100</i>&nbsp;        // -------- Query for Getting Doc Code --------
+<i class="no-highlight">101</i>&nbsp;
+<i class="no-highlight">102</i>&nbsp;        // -------- Query for Patient Data --------
+<b class="fc"><i class="no-highlight">103</i>&nbsp;        ResultSet rs = st.executeQuery(query);</b>
+<i class="no-highlight">104</i>&nbsp;
+<b class="fc"><i class="no-highlight">105</i>&nbsp;        rs.next();</b>
+<b class="fc"><i class="no-highlight">106</i>&nbsp;        return rs.getString(1);</b>
+<i class="no-highlight">107</i>&nbsp;    }
+<i class="no-highlight">108</i>&nbsp;    // -------- Get Doctor Code DAO Function --------
+<i class="no-highlight">109</i>&nbsp;
+<i class="no-highlight">110</i>&nbsp;
+<i class="no-highlight">111</i>&nbsp;//    public String getAppointmentStatus(String id) throws SQLException {
+<i class="no-highlight">112</i>&nbsp;//        // -------- Query for Getting Appointment Status --------
+<i class="no-highlight">113</i>&nbsp;//        String query = &quot;SELECT appointment_status FROM appointments WHERE patient_id=&#39;&quot; + id + &quot;&#39;&quot;;
+<i class="no-highlight">114</i>&nbsp;//        // -------- Query for Getting Appointment Status --------
+<i class="no-highlight">115</i>&nbsp;//
+<i class="no-highlight">116</i>&nbsp;//        // -------- Query for Patient Data --------
+<i class="no-highlight">117</i>&nbsp;//        ResultSet rs = st.executeQuery(query);
+<i class="no-highlight">118</i>&nbsp;//
+<i class="no-highlight">119</i>&nbsp;//
+<i class="no-highlight">120</i>&nbsp;//        return rs.getString(1);
+<i class="no-highlight">121</i>&nbsp;//    }
+<i class="no-highlight">122</i>&nbsp;
+<i class="no-highlight">123</i>&nbsp;
+<i class="no-highlight">124</i>&nbsp;//    public void changeFromBusy() throws SQLException {
+<i class="no-highlight">125</i>&nbsp;//
+<i class="no-highlight">126</i>&nbsp;//        String query = &quot;Update appointments set appointment_status=\&#39;COMPLETE\&#39; where appointment_status=\&#39;BUSY\&#39;&quot;;
+<i class="no-highlight">127</i>&nbsp;//        st.executeUpdate(query);
+<i class="no-highlight">128</i>&nbsp;//
+<i class="no-highlight">129</i>&nbsp;//    }
+<i class="no-highlight">130</i>&nbsp;
+<i class="no-highlight">131</i>&nbsp;
+<i class="no-highlight">132</i>&nbsp;
+<i class="no-highlight">133</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-08-19 01:03</div>
+</div>
+</body>
+</html>
